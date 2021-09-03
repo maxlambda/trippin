@@ -1,0 +1,129 @@
+@use '../../assets/tokens'as *;
+
+* {
+    font-family: $basicFont;
+    margin: 0;
+}
+
+label {
+    color: $appRed;
+    width: max-content;
+    font-size: $fontSmall;
+    border-bottom: 0.1rem solid $appRed;
+    margin: 0.5rem 0;
+    padding-top: 0.3rem;
+}
+
+// **************************************************************
+// Card component
+
+.card {
+    z-index: 99;
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    justify-content: space-around;
+
+    .title {
+        font-size: $fontMedium;
+        color: $appDarkBlue;
+    }
+
+    .desc {
+        font-size: $fontXSmall;
+    }
+
+    .star {
+        color: $appYellow;
+    }
+
+    .username {
+        font-size: $fontSmall;
+    }
+
+    .createdDate {
+        font-size: $fontXSmall;
+    }
+}
+
+.pin-button {
+    color: $appLightBlue;
+}
+
+.add-pin-text {
+    position: relative;
+    top: 60px;
+
+    .span {
+        position: absolute;
+        top: 40px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: $appRed;
+    }
+}
+
+form {
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    word-wrap: break-word;
+    justify-content: space-between;
+
+    input {
+        border: none;
+        border-bottom: 1px solid $appGrey;
+        font-size: $fontXSmall;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+        color: $appGrey;
+    }
+
+    textarea {
+        height: 60px;
+        border: none;
+        border-bottom: 1px solid $appGrey;
+        resize: none;
+        font-size: $fontXSmall;
+    }
+
+    select {
+        border-bottom: 1px solid $appGrey;
+        font-size: $fontXSmall;
+    }
+
+    .error {
+        padding-top: 5px;
+        display: flex;
+        flex-direction: row;
+        word-wrap: break-word;
+
+        p {
+            padding-left: 5px;
+            padding-top: 5px;
+            font-size: $fontXSmall;
+            color: $appRed;
+        }
+    }
+}
+
+.popup {
+    z-index: 99;
+    position: fixed;
+}
+
+.deleting-pin {
+    padding-left: 5px;
+    padding-top: 18px;
+    font-size: $fontXSmall;
+    color: $appRed;
+}

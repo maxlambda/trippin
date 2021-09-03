@@ -1,0 +1,37 @@
+@use '../../assets/tokens' as *;
+
+.header {
+    z-index: 999;
+    position: fixed;
+    background-color: $appDarkBlue;
+}
+
+.title {
+    padding-left: 7px;
+    font-size: $fontXLarge;
+}
+
+
+.btn {
+    border: none;
+    padding: 6px;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+}
+
+.login {
+    background-color: $appGrey;
+    margin-right: 5px;
+}
+.register {
+    background-color: $appDarkBlue;
+    margin-right: 5px;
+}
+
+
+.login-btns, .logout-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}

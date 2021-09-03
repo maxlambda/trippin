@@ -1,0 +1,74 @@
+@use '../../assets/tokens' as *;
+
+.register-container {
+    z-index: 999;
+    background-color: $appWhite;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 275px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.register-container-too-many-users {
+    z-index: 999;
+    background-color: $appWhite;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 300px;
+    height: 90px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    font-size: $fontMedium;
+}
+
+.cancel {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: $appDarkBlue;
+}
+
+.logo {
+    color: $appDarkBlue;
+    display: flex;
+    align-items: center;
+}
+
+.inputs {
+    color: black;
+    padding-top: 25px;
+}
+
+.inputs::placeholder {
+    color: $appGrey;
+}
+
+.register-success, .register-error {
+    text-align: center;
+    font-size: $fontSmall;
+}
+
+.register-success {
+    color: $appGreen;
+}
+.register-error {
+    color: $appRed;
+}
