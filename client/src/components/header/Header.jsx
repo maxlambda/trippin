@@ -6,7 +6,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 // My files
 import './Header.scss';
-import Explore from '@material-ui/icons/Explore';
 
 function Header(props) {
 

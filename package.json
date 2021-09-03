@@ -4,10 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "node server.js",
-    "client": "cd client && npm install && yarn start",
+    "server": "nodemon server.js",
+    "client": "cd client && yarn start",
+    "client:install": "cd client && npm install && yarn start",
+    "client:build": "cd client && npm run build",
     "dev": "concurrently --kill-others-on-fail \"npm run client\" \"npm run server\"",
-    "client:build": "cd client && npm run build"
+    "deploy": "concurrently --kill-others-on-fail \"npm run client:install\" \"node server.js\""
   },
   "author": "Max Lam",
   "license": "ISC",
@@ -20,6 +22,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "mongoose": "^6.0.4",
+    "nodemon": "^2.0.12",
     "request": "^2.88.2",
     "yarn": "^1.22.11"
   }

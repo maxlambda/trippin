@@ -253,8 +253,6 @@ function Map() {
           <Marker
             latitude={newPlace.lat}
             longitude={newPlace.long}
-            offsetLeft={-20}
-            offsetTop={-40}
           >
             <Zoom in={true} >
               <RoomIcon
