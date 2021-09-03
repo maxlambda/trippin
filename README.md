@@ -1,6 +1,6 @@
 # trippin
 
-A travel review app where users pin locations and write reviews on them.
+A travel review app where users pin locations and write reviews on them. Has login and register functionality, using MongoDB Atlas for cloud storage.
 
 ## Demo
 https://trip-pin-app.herokuapp.com/
