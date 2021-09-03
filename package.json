@@ -11,6 +11,9 @@
   },
   "author": "Max Lam",
   "license": "ISC",
+  "engines": {
+    "node": "14.17.5"
+  },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "concurrently": "^6.2.1",
