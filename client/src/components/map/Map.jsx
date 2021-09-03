@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ReactMapGL, { FlyToInterpolator, Marker, Popup } from 'react-map-gl';
 import axios from 'axios';
 import { format } from 'timeago.js';
+import mapboxgl from 'mapbox-gl';
 
 // My files
 import Header from "../header/Header.jsx";
@@ -25,6 +26,9 @@ import StarIcon from '@material-ui/icons/Star';
 import Zoom from '@material-ui/core/Zoom';
 
 let temporaryPinId = null;
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 function Map() {
   const localStorage = window.localStorage;
