@@ -8,7 +8,7 @@ https://trip-pin-app.herokuapp.com/
 ## Overview
 
 ### Frontend
-This application was created using [React](https://reactjs.org/) with [Sass](https://sass-lang.com/) and a few [Material-UI](https://material-ui.com/) icons and components. [Mapbox](https://www.mapbox.com/) was used to render the map.
+This application was created using [React](https://reactjs.org/) with [Sass](https://sass-lang.com/) and a few [Material-UI](https://material-ui.com/) icons and components. [Mapbox](https://www.mapbox.com/) was used to render the map. A Geocoder is used for mapping place names to geographical coordinates (i.e. place-search functionality).
 
 ### Backend, Database, Authentication, Deployment
 This application uses [Node.js](https://nodejs.org/en/) and [Express](https://expressjs.com/) for its backend. On the client side, [Axios](https://axios-http.com/docs/intro) was used to make HTTP requests.
