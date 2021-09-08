@@ -35,3 +35,19 @@
     top: 16px;
     right: 16px;
 }
+
+// **************************************************************
+// Geocoder component
+
+.geocoder {
+    display: flex;
+    position: relative;
+    left: 25px;
+    align-items: center;
+}
+
+@media (max-width: 640px) {
+  .no-title {
+      display: none;
+  }
+}

@@ -1,15 +1,19 @@
 //jshint esversion:6
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import ReactMapGL, { FlyToInterpolator, Marker, Popup } from 'react-map-gl';
 import axios from 'axios';
 import { format } from 'timeago.js';
 import mapboxgl from 'mapbox-gl';
+import Geocoder from 'react-map-gl-geocoder';
+import "mapbox-gl/dist/mapbox-gl.css";
+import "react-map-gl-geocoder/dist/mapbox-gl-geocoder.css";
 
 // My files
 import Header from "../header/Header.jsx";
 import Login from "../login/Login.jsx";
 import Register from "../register/Register.jsx";
+import useWindowDimensions from '../../utilities/WindowDims.jsx';
 import './Map.scss';
 
 // Material-UI
@@ -31,8 +35,14 @@ let temporaryPinId = null;
 mapboxgl.workerClass = require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 function Map() {
-  const localStorage = window.localStorage;
-  const [currentUser, setCurrentUser] = useState(localStorage.getItem("user"));
+  const { height, width } = useWindowDimensions();
+
+  const storedUser = {
+    user: window.localStorage.getItem("user"),
+    display: window.localStorage.getItem("display")
+  };
+  
+  const [currentUser, setCurrentUser] = useState(storedUser);
   const [tooManyUsers, setTooManyUsers] = useState(false);
 
   const [pins, setPins] = useState([]);
@@ -41,7 +51,8 @@ function Map() {
   const [addingPin, setAddingPin] = useState(false);
   const [deletingPin, setDeletingPin] = useState(false);
 
-  const [showRegister, setShowRegister] = useState(false);
+  const initialShowRegister = (currentUser === null || currentUser === "") ? true : false;
+  const [showRegister, setShowRegister] = useState(initialShowRegister);
   const [showLogin, setShowLogin] = useState(false);
 
   const [newPlace, setNewPlace] = useState(null);
@@ -53,6 +64,8 @@ function Map() {
   const [invalidDesc, setInvalidDesc] = useState(false);
   const [invalidRating, setInvalidRating] = useState(false);
 
+  const [mapDrag, setMapDrag] = useState(true);
+
   const [viewport, setViewport] = useState({
     width: "100vw",
     height: "100vh",
@@ -60,6 +73,15 @@ function Map() {
     longitude: -21.007683545740246,
     zoom: 2
   });
+
+  const mapRef = useRef();
+  const geocoderContainerRef = useRef();
+  const geocoderRef = useRef();
+  const titleRef = useRef();
+
+  function onViewportChange(newViewport) {
+    setViewport({ ...newViewport, width: "100vw", height: "100vh" });
+  }
 
   // Opens the popup for the clicked pin, centering the screen on that pin.
   function handleMarkerClick(pinId, lat, long) {
@@ -73,7 +95,7 @@ function Map() {
   function handleAddPinButtonClick() {
     let userPinCounter = 0;
     pins.forEach(pin => {
-      if (pin.displayname === currentUser) userPinCounter++;
+      if (currentUser && (pin.username === currentUser.user)) userPinCounter++;
     });
 
     // Prevent the user from having over 5 pins.
@@ -133,7 +155,8 @@ function Map() {
     }
 
     const newPin = {
-      displayname: currentUser,
+      displayname: currentUser.display,
+      username: currentUser.user,
       title,
       desc,
       rating,
@@ -156,12 +179,34 @@ function Map() {
     setDeletingPin(false);
   }
 
-  function setLocalStorage(user) {
-    localStorage.setItem("user", user);
+  // Saves the user's login session to the browser.
+  function setLocalStorage(data) {
+    localStorage.setItem("user", data.user);
+    localStorage.setItem("display", data.display);
   }
+
   function handleLogout() {
     localStorage.removeItem("user");
     setCurrentUser(null);
+    setAddingPin(false);
+  }
+
+  function handleMapDrag(drag) {
+    return setMapDrag(drag);
+  }
+
+  function handleOnResult(result) {
+    const [long, lat] = result.result.center;
+    if(addingPin) {
+      setNewPlace({lat, long});
+      titleRef.current.value = result.result.text;
+    }
+  }
+
+  function handleGeocoderViewportChange(newViewport) {
+    const geocoderDefaultOverrides = { transitionDuration: 1000 };
+
+    return setViewport({...newViewport, ...geocoderDefaultOverrides});
   }
 
   async function handleDeletePinYesClick(pinId) {
@@ -207,52 +252,86 @@ function Map() {
 
   return (
     <div>
+      <Header
+            geoRef={geocoderContainerRef}
+            currentUser={currentUser}
+            localStorage={localStorage}
+            onLogout={handleLogout}
+            onRegister={() => {
+              setShowRegister(!showRegister);
+              setShowLogin(false);
+            }}
+            onLogin={() => {
+              setShowRegister(false);
+              setShowLogin(!showLogin);
+            }}
+          />
       <ReactMapGL
+        ref={mapRef}
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
-        onViewportChange={nextViewport => setViewport(nextViewport)}
+        onViewportChange={nextViewport => onViewportChange(nextViewport)}
         mapStyle="mapbox://styles/safak/cknndpyfq268f17p53nmpwira"
-        transitionDuration={10}
+        transitionDuration={15}
         transitionInterpolator={new FlyToInterpolator()}
         doubleClickZoom={false}
         onDblClick={handleAddPinClick}
+        dragPan={mapDrag ? true : false}
       >
 
-        <Header
-          currentUser={currentUser}
-          localStorage={localStorage}
-          onLogout={handleLogout}
-          onRegister={() => {
-            setShowRegister(!showRegister);
-            setShowLogin(false);
-          }}
-          onLogin={() => {
-            setShowRegister(false);
-            setShowLogin(!showLogin);
-          }}
-        />
+        {currentUser && addingPin &&
+          <div className="geocoder">
+            <Geocoder
+              ref={geocoderRef}
+              mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
+              viewport={viewport}
+              mapRef={mapRef}
+              containerRef={geocoderContainerRef}
+              placeholder="Search for a place..."
+              onViewportChange={handleGeocoderViewportChange}
+              onResult={handleOnResult}
+              clearAndBlurOnEsc={true}
+            />
+          </div>
+        }
 
         {showLogin &&
-          <Zoom in={true}>
-            <Login
-              currenUser={currentUser}
-              localStorage={localStorage}
-              setCurrentUser={setCurrentUser}
-              setLocalStorage={(user) => { setLocalStorage(user) }}
-              onClose={() => setShowLogin(false)} />
-          </Zoom>
+          <div onMouseEnter={() => handleMapDrag(false)} onMouseLeave={() => handleMapDrag(true)}>
+            <Zoom in={true}>
+              <Login
+                currentUser={currentUser}
+                localStorage={localStorage}
+                setCurrentUser={(user)=>setCurrentUser(user)}
+                setLocalStorage={(user) => { setLocalStorage(user) }}
+                onClose={() => {
+                  setShowLogin(false);
+                  handleMapDrag(true);
+                }} />
+            </Zoom>
+          </div>
         }
 
         {showRegister &&
-          <Zoom in={true}>
-            <Register currentUser={currentUser} onClose={() => setShowRegister(false)} tooManyUsers={tooManyUsers}/>
-          </Zoom>
+          <div onMouseEnter={() => handleMapDrag(false)} onMouseLeave={() => handleMapDrag(true)}>
+            <Zoom in={true}>
+              <Register
+                currentUser={currentUser}
+                onClose={() => {
+                  setShowRegister(false);
+                  handleMapDrag(true);
+                }}
+                onRegisterComplete={() => setShowLogin(true)}
+                tooManyUsers={tooManyUsers} />
+            </Zoom>
+          </div>
         }
 
         {addingPin && newPlace !== null &&
           <Marker
             latitude={newPlace.lat}
             longitude={newPlace.long}
+            offsetLeft={-20}
+            offsetTop={-40}
           >
             <Zoom in={true} >
               <RoomIcon
@@ -280,7 +359,7 @@ function Map() {
                   <RoomIcon
                     style={{
                       fontSize: "40px",
-                      color: currentPinId === pin._id ? "#FF4848" : pin.displayname === currentUser ? "#111D5E" : "#7B8B94",
+                      color: currentPinId === pin._id ? "#FF4848" : (currentUser && pin.username === currentUser.user) ? "#111D5E" : "#7B8B94",
                       cursor: "pointer"
                     }}
                     onClick={() => (
@@ -317,7 +396,7 @@ function Map() {
                       <span className="username">Created by <b>{pin.displayname}</b></span>
                       <span className="createdDate">{format(pin.createdAt)}</span>
 
-                      {pin.displayname === currentUser && !deletingPin &&
+                      {currentUser && pin.username === currentUser.user && !deletingPin &&
                         <Button
                           variant="contained"
                           color="secondary"
@@ -335,7 +414,7 @@ function Map() {
                         </Button>
                       }
 
-                      {pin.displayname === currentUser && deletingPin && (currentPinId !== null) &&
+                      {currentUser && pin.username === currentUser.user && deletingPin && (currentPinId !== null) &&
                         <div>
                           <p className="deleting-pin">Are you sure you want to delete this pin?</p>
                           <Button
@@ -398,6 +477,7 @@ function Map() {
 
                   <label>Place name</label>
                   <input
+                    ref={titleRef}
                     placeholder="Enter a title..."
                     onClick={() => setInvalidTitle(false)}
                     onChange={(event) => setTitle(event.target.value)}
@@ -483,27 +563,6 @@ function Map() {
           </Zoom>
         }
 
-        <Zoom in={addingPin ? true : false} >
-
-          <div className="add-pin-text">
-            <Paper
-              elevation={2}
-              style={{
-                position: "absolute",
-                fontSize: "23px",
-                top: "40px",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
-                color: "#FF4848",
-                padding: "15px 30px",
-                margin: "15px"
-              }}>
-              Double-click anywhere to add a pin.
-            </Paper>
-          </div>
-
-        </Zoom>
-
         <Zoom in={tooManyPins ? true : false} >
 
           <div className="add-pin-text">
@@ -525,13 +584,14 @@ function Map() {
 
         </Zoom>
 
-        <Zoom in={!addingPin && currentUser !== "" && currentUser !== null ? true : false} >
+        <Zoom in={!addingPin && currentUser ? true : false} >
           <Fab
+            classes={{ label: "add-pin-btn" }}
             style={{
               backgroundColor: tooManyPins ? '#7B8B94' : '#FF4848',
               position: 'absolute',
-              left: '10px',
-              bottom: '40px'
+              left: '20px',
+              bottom: '55px'
             }}
             size="small"
             onClick={handleAddPinButtonClick}
@@ -549,12 +609,30 @@ function Map() {
               backgroundColor: '#7B8B94',
               position: 'absolute',
               left: '10px',
-              bottom: '40px'
+              bottom: '55px'
             }}
             classes={{ label: 'pin-button' }}
             onClick={handleCancelButtonClick}
           >
             CANCEL
+          </Button>
+        </Zoom>
+
+        <Zoom in={currentUser && width <= 485 ? true : false} >
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            style={{
+              backgroundColor: '#7B8B94',
+              position: 'absolute',
+              right: '10px',
+              bottom: '55px'
+            }}
+            classes={{ label: 'pin-button' }}
+            onClick={handleLogout}
+          >
+            LOG OUT
           </Button>
         </Zoom>
 
