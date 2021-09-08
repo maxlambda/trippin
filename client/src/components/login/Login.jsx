@@ -27,7 +27,7 @@ function Login(props) {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const username = usernameRef.current.value;
+        const username = usernameRef.current.value.toLowerCase();
         const pw = passwordRef.current.value;
 
         if (username === "" || username === null) {
@@ -38,16 +38,16 @@ function Login(props) {
             return;
         }
 
-        const user = {
+        const currentUser = {
             username: username,
             password: pw
         };
 
         try {
             setError(false);
-            const res = await axios.post("/users/login", user);
-                props.setLocalStorage(res.data.displayname);
-                props.setCurrentUser(res.data.displayname);
+            const res = await axios.post("/users/login", currentUser);
+                props.setLocalStorage({user: res.data.username, display: res.data.displayname});
+                props.setCurrentUser({user: res.data.username, display: res.data.displayname});
                 props.onClose();
             
         } catch (err) {
@@ -63,6 +63,8 @@ function Login(props) {
             </div>
 
             <CancelIcon className="cancel" onClick={()=>props.onClose()}/>
+
+            <h3 className="login-header">trippin</h3>
 
             <form onSubmit={handleSubmit}>
                 <input
@@ -103,7 +105,7 @@ function Login(props) {
                     LOGIN
                 </Button>
                 {error &&
-                    <span className="login-error">Invalid username and password combination.</span>
+                    <span className="login-error">Invalid username/password combo.</span>
                 }
             </form>
         </div >

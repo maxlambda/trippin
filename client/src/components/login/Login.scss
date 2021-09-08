@@ -13,7 +13,7 @@
     justify-content: space-between;
     align-items: center;
     width: 300px;
-    height: 210px;
+    height: 240px;
     margin: auto;
     padding: 20px;
     border-radius: 10px;
@@ -51,4 +51,10 @@
 }
 .login-error {
     color: $appRed;
+}
+
+.login-header {
+    color: $appDarkBlue;
+    font-size: $fontLarge;
+    padding: 7px;
 }

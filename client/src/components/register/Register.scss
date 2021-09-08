@@ -13,7 +13,7 @@
     justify-content: space-between;
     align-items: center;
     width: 300px;
-    height: 275px;
+    height: 360px;
     margin: auto;
     padding: 20px;
     border-radius: 10px;
@@ -71,4 +71,15 @@
 }
 .register-error {
     color: $appRed;
+}
+
+.register-header {
+    color: $appDarkBlue;
+    font-size: $fontLarge;
+    padding: 7px;
+    padding-bottom: 14px;
+}
+
+.register-info {
+    text-align: center;
 }
