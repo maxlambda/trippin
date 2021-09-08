@@ -4,7 +4,7 @@ const User = require("../models/User");
 const bcrypt = require('bcrypt');
 
 // ***********************************************************************
-// Register a user using a hashed password. Uses bcrypt.
+// Register a user using a hashed password, uses bcrypt
 
 router.post("/register", async (req, res) => {
 
@@ -33,7 +33,7 @@ router.post("/register", async (req, res) => {
 });
 
 // ***********************************************************************
-// Login a user.
+// Login a user
 
 router.post("/login", async (req, res) => {
     try {
@@ -46,7 +46,7 @@ router.post("/login", async (req, res) => {
         if (!validPassword) res.status(400).json("Incorrect username and/or password combination.");
 
         // Send response (success)
-        res.status(200).json({ _id: user._id, username: user.username, displayname: user.displayname, verified: user.verified });
+        res.status(200).json({ _id: user._id, username: user.username, displayname: user.displayname });
     } catch (err) {
         res.status(500).json(err);
     }
