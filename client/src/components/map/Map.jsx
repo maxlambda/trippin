@@ -41,7 +41,7 @@ function Map() {
     user: window.localStorage.getItem("user"),
     display: window.localStorage.getItem("display")
   };
-  
+
   const [currentUser, setCurrentUser] = useState(storedUser);
   const [tooManyUsers, setTooManyUsers] = useState(false);
 
@@ -197,8 +197,8 @@ function Map() {
 
   function handleOnResult(result) {
     const [long, lat] = result.result.center;
-    if(addingPin) {
-      setNewPlace({lat, long});
+    if (addingPin) {
+      setNewPlace({ lat, long });
       titleRef.current.value = result.result.text;
     }
   }
@@ -206,7 +206,7 @@ function Map() {
   function handleGeocoderViewportChange(newViewport) {
     const geocoderDefaultOverrides = { transitionDuration: 1000 };
 
-    return setViewport({...newViewport, ...geocoderDefaultOverrides});
+    return setViewport({ ...newViewport, ...geocoderDefaultOverrides });
   }
 
   async function handleDeletePinYesClick(pinId) {
@@ -252,7 +252,21 @@ function Map() {
 
   return (
     <div>
-      <Header
+      <ReactMapGL
+        ref={mapRef}
+        {...viewport}
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
+        onViewportChange={nextViewport => onViewportChange(nextViewport)}
+        mapStyle="mapbox://styles/safak/cknndpyfq268f17p53nmpwira"
+        transitionDuration={15}
+        transitionInterpolator={new FlyToInterpolator()}
+        doubleClickZoom={false}
+        onDblClick={handleAddPinClick}
+        dragPan={mapDrag ? true : false}
+      >
+
+        <div onMouseEnter={() => handleMapDrag(false)} onMouseLeave={() => handleMapDrag(true)}>
+          <Header
             geoRef={geocoderContainerRef}
             currentUser={currentUser}
             localStorage={localStorage}
@@ -266,18 +280,7 @@ function Map() {
               setShowLogin(!showLogin);
             }}
           />
-      <ReactMapGL
-        ref={mapRef}
-        {...viewport}
-        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
-        onViewportChange={nextViewport => onViewportChange(nextViewport)}
-        mapStyle="mapbox://styles/safak/cknndpyfq268f17p53nmpwira"
-        transitionDuration={15}
-        transitionInterpolator={new FlyToInterpolator()}
-        doubleClickZoom={false}
-        onDblClick={handleAddPinClick}
-        dragPan={mapDrag ? true : false}
-      >
+        </div>
 
         {currentUser && addingPin &&
           <div className="geocoder">
@@ -301,7 +304,7 @@ function Map() {
               <Login
                 currentUser={currentUser}
                 localStorage={localStorage}
-                setCurrentUser={(user)=>setCurrentUser(user)}
+                setCurrentUser={(user) => setCurrentUser(user)}
                 setLocalStorage={(user) => { setLocalStorage(user) }}
                 onClose={() => {
                   setShowLogin(false);
