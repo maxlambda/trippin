@@ -591,7 +591,7 @@ function Map() {
               backgroundColor: tooManyPins ? '#7B8B94' : '#FF4848',
               position: 'absolute',
               left: '20px',
-              bottom: '55px'
+              bottom: width > 640 ? '55px' : '80px'
             }}
             size="small"
             onClick={handleAddPinButtonClick}
@@ -609,7 +609,7 @@ function Map() {
               backgroundColor: '#7B8B94',
               position: 'absolute',
               left: '10px',
-              bottom: '55px'
+              bottom: width > 640 ? '55px' : '80px'
             }}
             classes={{ label: 'pin-button' }}
             onClick={handleCancelButtonClick}
@@ -627,7 +627,7 @@ function Map() {
               backgroundColor: '#7B8B94',
               position: 'absolute',
               right: '10px',
-              bottom: '55px'
+              bottom: width > 640 ? '55px' : '80px'
             }}
             classes={{ label: 'pin-button' }}
             onClick={handleLogout}
