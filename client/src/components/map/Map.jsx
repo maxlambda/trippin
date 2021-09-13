@@ -200,6 +200,7 @@ function Map() {
     if (addingPin) {
       setNewPlace({ lat, long });
       titleRef.current.value = result.result.text;
+      setTitle(result.result.text);
     }
   }
 
