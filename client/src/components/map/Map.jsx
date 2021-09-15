@@ -51,7 +51,7 @@ function Map() {
   const [addingPin, setAddingPin] = useState(false);
   const [deletingPin, setDeletingPin] = useState(false);
 
-  const initialShowRegister = (currentUser === null || currentUser === "") ? true : false;
+  const initialShowRegister = (currentUser.user == null || currentUser.user === "") ? true : false;
   const [showRegister, setShowRegister] = useState(initialShowRegister);
   const [showLogin, setShowLogin] = useState(false);
 
@@ -187,7 +187,12 @@ function Map() {
 
   function handleLogout() {
     localStorage.removeItem("user");
-    setCurrentUser(null);
+    localStorage.removeItem("display");
+    const nullUser = {
+      user: null,
+      display: null
+    };
+    setCurrentUser(nullUser);
     setAddingPin(false);
   }
 
@@ -588,7 +593,7 @@ function Map() {
 
         </Zoom>
 
-        <Zoom in={!addingPin && currentUser ? true : false} >
+        <Zoom in={!addingPin && currentUser.user != null && currentUser.user !== ""  ? true : false} >
           <Fab
             classes={{ label: "add-pin-btn" }}
             style={{

@@ -29,8 +29,10 @@ function Header(props) {
           <h1 className={props.currentUser ? "title no-title" : "title"}>
             trippin
           </h1>
-          {props.currentUser && <div ref={props.geoRef} className="geocoder" />}
-          {props.currentUser && width > 485 && (
+          {props.currentUser.user != null && props.currentUser.user !== "" &&
+            <div ref={props.geoRef} className="geocoder" />
+          }
+          {props.currentUser.user != null && props.currentUser.user !== "" && width > 485 && (
             <div className="logout-btn">
               <Button
                 size="large"
@@ -45,7 +47,7 @@ function Header(props) {
               </Button>
             </div>
           )}
-          {!props.currentUser && (
+          {(props.currentUser.user == null || props.currentUser.user === "") && (
             <div className="login-btns">
               <Button
                 size="large"
