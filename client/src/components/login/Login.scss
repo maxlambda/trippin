@@ -1,6 +1,7 @@
 @use '../../assets/tokens' as *;
 
 .login-container {
+    cursor: default;
     z-index: 999;
     background-color: $appWhite;
     position: absolute;
@@ -24,6 +25,7 @@
     top: 8px;
     right: 8px;
     color: $appDarkBlue;
+    cursor: pointer;
 }
 
 .logo {

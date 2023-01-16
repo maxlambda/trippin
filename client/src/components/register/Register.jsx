@@ -207,6 +207,8 @@ function Register(props) {
                 REGISTER
               </Button>
             )}
+              <p className="register-browse">
+                Or, <span style={{color: "blue"}} onClick={() => props.onClose()}>browse others'</span> pins.</p>
             {success && (
               <span className="register-success">Registered successfully!</span>
             )}

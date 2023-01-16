@@ -1,6 +1,7 @@
 @use '../../assets/tokens' as *;
 
 .register-container {
+    cursor: default;
     z-index: 999;
     background-color: $appWhite;
     position: absolute;
@@ -13,7 +14,7 @@
     justify-content: space-between;
     align-items: center;
     width: 300px;
-    height: 360px;
+    height: 400px;
     margin: auto;
     padding: 20px;
     border-radius: 10px;
@@ -44,6 +45,7 @@
     top: 8px;
     right: 8px;
     color: $appDarkBlue;
+    cursor: pointer;
 }
 
 .logo {
@@ -59,6 +61,15 @@
 
 .inputs::placeholder {
     color: $appGrey;
+}
+
+.register-browse {
+    margin: auto;
+    padding: 10px;
+
+    span {
+        cursor: pointer;
+    }
 }
 
 .register-success, .register-error {
