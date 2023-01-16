@@ -595,17 +595,21 @@ function Map() {
 
         <Zoom in={!addingPin && currentUser.user != null && currentUser.user !== ""  ? true : false} >
           <Fab
+            variant="extended"
             classes={{ label: "add-pin-btn" }}
             style={{
               backgroundColor: tooManyPins ? '#7B8B94' : '#FF4848',
               position: 'absolute',
               left: '20px',
-              bottom: width > 640 ? '55px' : '80px'
+              bottom: width > 640 ? '55px' : '80px',
+              padding: '20px',
+              color: 'black'
             }}
             size="small"
             onClick={handleAddPinButtonClick}
           >
             <AddIcon></AddIcon>
+            Add pin
           </Fab>
         </Zoom>
 
