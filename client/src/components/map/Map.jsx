@@ -263,7 +263,7 @@ function Map() {
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX}
         onViewportChange={nextViewport => onViewportChange(nextViewport)}
-        mapStyle="mapbox://styles/safak/cknndpyfq268f17p53nmpwira"
+        mapStyle="mapbox://styles/maxnificence/clec1o7xw000001mq7g72jshj"
         transitionDuration={15}
         transitionInterpolator={new FlyToInterpolator()}
         doubleClickZoom={false}
@@ -294,7 +294,7 @@ function Map() {
             width="149"
             height="149"
             src="https://github.blog/wp-content/uploads/2008/12/forkme_right_red_aa0000.png?resize=149%2C149"
-            class="attachment-full size-full"
+            className="attachment-full size-full"
             alt="Fork me on GitHub"
             data-recalc-dims="1"/>
         </a>
@@ -357,7 +357,9 @@ function Map() {
               <RoomIcon
                 style={{
                   fontSize: "40px",
-                  color: "#FF4848"
+                  stroke: "#3d3425",
+                  strokeWidth: "0.5px",
+                  color: "#BC5C4B"
                 }}
               />
             </Zoom>
@@ -379,7 +381,9 @@ function Map() {
                   <RoomIcon
                     style={{
                       fontSize: "40px",
-                      color: currentPinId === pin._id ? "#FF4848" : (currentUser && pin.username === currentUser.user) ? "#111D5E" : "#7B8B94",
+                      stroke: "#3d3425",
+                      strokeWidth: "0.5px",
+                      color: currentPinId === pin._id ? "#A50000" : (currentUser && pin.username === currentUser.user) ? "#528984" : "#BC5C4B",
                       cursor: "pointer"
                     }}
                     onClick={() => (
@@ -410,7 +414,7 @@ function Map() {
                       <p className="desc">{pin.desc}</p>
                       <label>Rating:</label>
                       <div className="stars" >
-                        {Array(pin.rating).fill(<StarIcon className="star" />)}
+                        {Array(pin.rating).fill(<StarIcon id={pin._id} className="star" />)}
                       </div>
                       <label>Information:</label>
                       <span className="username">Created by <b>{pin.displayname}</b></span>
@@ -424,7 +428,7 @@ function Map() {
                           startIcon={<DeleteIcon />}
                           style={{
                             width: "100%",
-                            backgroundColor: '#7B8B94',
+                            backgroundColor: '#BBC2B6',
                             margin: "15px auto 5px"
                           }}
                           classes={{ label: 'pin-button' }}
@@ -444,7 +448,7 @@ function Map() {
                             startIcon={<CheckIcon />}
                             style={{
                               width: "45%",
-                              backgroundColor: '#FF4848',
+                              backgroundColor: '#BC5C4B',
                               margin: "15px auto 5px"
                             }}
                             classes={{ label: 'pin-button' }}
@@ -461,7 +465,7 @@ function Map() {
                               position: "absolute",
                               right: "10px",
                               width: "45%",
-                              backgroundColor: '#7B8B94',
+                              backgroundColor: '#BBC2B6',
                               margin: "15px auto 5px"
                             }}
                             classes={{ label: 'pin-button' }}
@@ -508,7 +512,7 @@ function Map() {
 
                         <ErrorIcon
                           size="small"
-                          style={{ color: "#7B8B94" }}
+                          style={{ color: "#BBC2B6" }}
                         ></ErrorIcon>
                         <p>Please enter a place name.</p>
 
@@ -528,7 +532,7 @@ function Map() {
 
                         <ErrorIcon
                           size="small"
-                          style={{ color: "#7B8B94" }}
+                          style={{ color: "#BBC2B6" }}
                         ></ErrorIcon>
                         <p>Please enter a description.</p>
 
@@ -551,7 +555,7 @@ function Map() {
 
                         <ErrorIcon
                           size="small"
-                          style={{ color: "#7B8B94" }}
+                          style={{ color: "#BBC2B6" }}
                         ></ErrorIcon>
                         <p>Please enter a rating.</p>
 
@@ -567,7 +571,7 @@ function Map() {
                     startIcon={<AddIcon />}
                     style={{
                       width: "100%",
-                      backgroundColor: '#FF4848',
+                      backgroundColor: '#BC5C4B',
                       margin: "15px auto 5px"
                     }}
                     classes={{ label: 'pin-button' }}
@@ -594,7 +598,7 @@ function Map() {
                 top: "40px",
                 left: "50%",
                 transform: "translate(-50%, -50%)",
-                color: "#FF4848",
+                color: "#BC5C4B",
                 padding: "15px 30px",
                 margin: "15px"
               }}>
@@ -609,12 +613,14 @@ function Map() {
             variant="extended"
             classes={{ label: "add-pin-btn" }}
             style={{
-              backgroundColor: tooManyPins ? '#7B8B94' : '#FF4848',
+              backgroundColor: tooManyPins ? '#BBC2B6' : '#BC5C4B',
               position: 'absolute',
               left: '20px',
               bottom: width > 640 ? '55px' : '80px',
               padding: '20px',
-              color: 'black'
+              color: '#3d3425',
+              borderRadius: 0,
+              boxShadow: '4px 4px 0 2px #3d3425'
             }}
             size="small"
             onClick={handleAddPinButtonClick}
@@ -627,13 +633,15 @@ function Map() {
         <Zoom in={addingPin ? true : false} >
           <Button
             variant="contained"
-            color="secondary"
             size="large"
             style={{
-              backgroundColor: '#7B8B94',
+              backgroundColor: '#BBC2B6',
               position: 'absolute',
-              left: '10px',
-              bottom: width > 640 ? '55px' : '80px'
+              left: '20px',
+              bottom: width > 640 ? '55px' : '80px',
+              color: '#3d3425',
+              borderRadius: 0,
+              boxShadow: '4px 4px 0 2px #3d3425'
             }}
             classes={{ label: 'pin-button' }}
             onClick={handleCancelButtonClick}
@@ -648,7 +656,7 @@ function Map() {
             color="secondary"
             size="large"
             style={{
-              backgroundColor: '#7B8B94',
+              backgroundColor: '#BBC2B6',
               position: 'absolute',
               right: '10px',
               bottom: width > 640 ? '55px' : '80px'

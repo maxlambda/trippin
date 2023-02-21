@@ -117,7 +117,7 @@ function Register(props) {
 
           <CancelIcon className="cancel" onClick={() => props.onClose()} />
 
-          <h3 className="register-header">trippin</h3>
+          <h3 className="register-header"><span className="highlight">TRIPPIN</span></h3>
           <p className="register-info">
             Pin locations to a map. Submit reviews. See others' reviews.
           </p>
@@ -198,9 +198,9 @@ function Register(props) {
                 variant="contained"
                 size="large"
                 style={{
-                  color: "white",
+                  color: "#3d3425",
                   width: "100%",
-                  backgroundColor: "#FF4848",
+                  backgroundColor: "#EECF68",
                   margin: "15px auto 5px",
                 }}
               >
@@ -208,7 +208,7 @@ function Register(props) {
               </Button>
             )}
               <p className="register-browse">
-                Or, <span style={{color: "blue"}} onClick={() => props.onClose()}>browse others'</span> pins.</p>
+                Or, <span className="browse-others" onClick={() => props.onClose()}>browse others'</span> pins.</p>
             {success && (
               <span className="register-success">Registered successfully!</span>
             )}

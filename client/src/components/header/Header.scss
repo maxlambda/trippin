@@ -3,14 +3,15 @@
 .header {
     z-index: 999;
     position: fixed;
-    background-color: $appDarkBlue;
+    background-color: $appDark;
+    cursor: default;
+    box-shadow: 5px 5px 5px 15px;
 }
 
 .title {
-    padding-left: 7px;
+    padding-left: 10px;
     font-size: $fontXLarge;
 }
-
 
 .btn {
     border: none;
@@ -21,14 +22,13 @@
 }
 
 .login {
-    background-color: $appGrey;
+    background-color: $appLightBlue;
     margin-right: 5px;
 }
 .register {
-    background-color: $appDarkBlue;
+    background-color: $appDark;
     margin-right: 5px;
 }
-
 
 .login-btns, .logout-btn {
     position: absolute;

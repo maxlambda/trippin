@@ -2,6 +2,7 @@
 
 * {
     font-family: $basicFont;
+    font-weight: bold;
     margin: 0;
 }
 
@@ -39,7 +40,6 @@ label {
 
     .title {
         font-size: $fontMedium;
-        color: $appDarkBlue;
     }
 
     .desc {
@@ -47,6 +47,8 @@ label {
     }
 
     .star {
+        stroke: black;
+        stroke-width: 0.5px;
         color: $appYellow;
     }
 
@@ -57,10 +59,6 @@ label {
     .createdDate {
         font-size: $fontXSmall;
     }
-}
-
-.pin-button {
-    color: $appLightBlue;
 }
 
 .add-pin-text {
@@ -91,7 +89,7 @@ form {
 
     input {
         border: none;
-        border-bottom: 1px solid $appGrey;
+        border-bottom: 1px solid $appLightBlue;
         font-size: $fontXSmall;
     }
 
@@ -103,19 +101,19 @@ form {
 
     input::placeholder,
     textarea::placeholder {
-        color: $appGrey;
+        color: $appLightBlue;
     }
 
     textarea {
         height: 60px;
         border: none;
-        border-bottom: 1px solid $appGrey;
+        border-bottom: 1px solid $appLightBlue;
         resize: none;
         font-size: $fontXSmall;
     }
 
     select {
-        border-bottom: 1px solid $appGrey;
+        border-bottom: 1px solid $appLightBlue;
         font-size: $fontXSmall;
     }
 
@@ -144,4 +142,12 @@ form {
     padding-top: 18px;
     font-size: $fontXSmall;
     color: $appRed;
+}
+
+.highlight {
+    color: $appDark;
+    background-color: $appYellow;
+    font-family: $titleFont;
+    text-transform: uppercase;
+    padding: 2px 6px;
 }

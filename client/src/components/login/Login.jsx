@@ -64,7 +64,7 @@ function Login(props) {
 
             <CancelIcon className="cancel" onClick={()=>props.onClose()}/>
 
-            <h3 className="login-header">trippin</h3>
+            <h3 className="login-header"><span className="highlight">TRIPPIN</span></h3>
 
             <form onSubmit={handleSubmit}>
                 <input
@@ -96,9 +96,9 @@ function Login(props) {
                     variant="contained"
                     size="large"
                     style={{
-                        color: "white",
+                        color: "#3d3425",
                         width: "100%",
-                        backgroundColor: '#111D5E',
+                        backgroundColor: '#EECF68',
                         margin: "15px auto 5px"
                     }}
                 >

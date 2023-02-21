@@ -23,11 +23,11 @@ function Header(props) {
 
   return (
     <div className="header">
-      <AppBar style={{ backgroundColor: "#111D5E" }}>
+      <AppBar style={{ backgroundColor: "#3d3425" }}>
         <Toolbar>
           <ExploreIcon />
           <h1 className={props.currentUser ? "title no-title" : "title"}>
-            trippin
+            <span className="highlight">TRIPPIN</span>
           </h1>
           {props.currentUser.user != null && props.currentUser.user !== "" &&
             <div ref={props.geoRef} className="geocoder" />
@@ -53,7 +53,7 @@ function Header(props) {
                 size="large"
                 style={{
                   height: "30px",
-                  color: "#9DDAC6",
+                  color: "#94c9d1",
                   borderRadius: "10px",
                 }}
                 onClick={handleLogin}
@@ -64,7 +64,7 @@ function Header(props) {
                 size="large"
                 style={{
                   height: "30px",
-                  color: "#C2FFD9",
+                  color: "#94c9d1",
                   borderRadius: "10px",
                 }}
                 onClick={handleRegister}
