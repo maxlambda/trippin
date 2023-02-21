@@ -5,7 +5,7 @@
 
 A travel review app where users pin locations and write reviews on them. User data is stored and managed using MongoDB Atlas. New features are being worked on.
 
-## Demo
+## Live Site
 https://trip-pin-app.herokuapp.com/
 
 ## Overview
