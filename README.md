@@ -1,5 +1,8 @@
 # trippin
 
+![image](https://user-images.githubusercontent.com/57158526/220278419-65139de1-d617-481f-91af-f799f55ac88b.png)
+
+
 A travel review app where users pin locations and write reviews on them. User data is stored and managed using MongoDB Atlas. New features are being worked on.
 
 ## Demo
@@ -26,3 +29,7 @@ npm install
 to install the necessary dependencies for the frontend. Finally, in `server.js` from the root directory, uncomment lines 17-21 while commenting out lines 23-25 to use a local database (MongoDB must be installed locally).
 
 Finally, run `npm run dev` for local development. Open [http://localhost:3000](http://localhost:3000) to view it in the browser. 
+
+## Old look
+
+![image](https://user-images.githubusercontent.com/57158526/220281658-2fc8b87d-d7b3-436e-b6f9-5c5b323ba1dc.png)
